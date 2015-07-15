@@ -79,7 +79,8 @@ public class Plugins {
         pluginsToLoad.add("s3");
         //pluginsToLoad.add("samba");
         pluginsToLoad.add("sftp");
-        //pluginsToLoad.add("webdav");        
+        //pluginsToLoad.add("webdav");
+        pluginsToLoad.add("hybris");
         
         // Only load the needed plugins        
         for(String pl: pluginsToLoad){

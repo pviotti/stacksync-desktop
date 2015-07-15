@@ -12,6 +12,8 @@ public class Account implements Configurable {
     private String password;
     private Long quotaLimit;
     private Long quotaUsed;
+    private boolean useHybris;
+    private String hybrisPropertiesFile;
     
     public Account() {
         this(null);
@@ -75,6 +77,22 @@ public class Account implements Configurable {
 
     public void setQuotaUsed(Long quotaUsed) {
         this.quotaUsed = quotaUsed;
+    }
+    
+    public boolean isUseHybris() {
+        return useHybris;
+    }
+
+    public void setUseHybris(boolean uh) {
+        this.useHybris = uh;
+    }
+    
+    public String getHybrisPropertiesFile() {
+        return hybrisPropertiesFile;
+    }
+
+    public void setHybrisPropertiesFile(String hp) {
+        this.hybrisPropertiesFile = hp;
     }
 
     @Override
