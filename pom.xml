@@ -110,6 +110,12 @@
             <artifactId>commons-net</artifactId>
             <version>3.0.1</version>
         </dependency>
+        <!-- HYBRIS -->
+        <dependency>
+            <groupId>fr.eurecom.hybris</groupId>
+            <artifactId>hybris</artifactId>
+            <version>0.3.0-SNAPSHOT</version>
+        </dependency>
         <!-- DATABASE -->
         <!-- derby -->
         <dependency>
@@ -188,6 +194,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.4</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -196,18 +203,18 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.stacksync.desktop.Stacksync</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
+		        <configuration>
+		          <descriptors>
+		            <descriptor>resources/conf/jar-with-dependencies.xml</descriptor>
+		          </descriptors>
+		          <archive>
+		            <manifest>
+		                <addClasspath>true</addClasspath>
+		                <classpathPrefix>lib/</classpathPrefix>
+		                <mainClass>com.stacksync.desktop.Stacksync</mainClass>
+		            </manifest>
+		        </archive>
+		        </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

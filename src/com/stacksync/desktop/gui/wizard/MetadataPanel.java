@@ -20,7 +20,7 @@ public class MetadataPanel extends SettingsPanel {
         lblServerIp.setText("RabbitMQ Ip:");
         lblMachineName.setText("Machine Name:");
          
-        txtServerIp.setText("");
+        txtServerIp.setText("192.168.56.101");
         txtServerIp.setSize(200, 24);
         txtMachineName.setText("");
         

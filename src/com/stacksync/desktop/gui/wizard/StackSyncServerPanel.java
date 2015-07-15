@@ -1,14 +1,21 @@
 package com.stacksync.desktop.gui.wizard;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+
+import com.stacksync.desktop.Environment;
+import com.stacksync.desktop.config.Folder;
 import com.stacksync.desktop.config.profile.Account;
 import com.stacksync.desktop.config.profile.Profile;
 import com.stacksync.desktop.gui.error.ErrorMessage;
 import com.stacksync.desktop.gui.settings.SettingsPanel;
+import com.stacksync.desktop.util.FileUtil;
 
 public class StackSyncServerPanel extends SettingsPanel {
     
-    private String password;
-    private String email;
+    private String password = "demo1";
+    private String email = "demo1@stacksync.org";
 	
     public StackSyncServerPanel(Profile profile) {
         this.profile = profile;
@@ -25,6 +32,11 @@ public class StackSyncServerPanel extends SettingsPanel {
     public void load() {
         txtEmail.setText(this.email);
         txtPassword.setText(this.password);
+        
+        Folder folder = new Folder(profile);
+        folder.setLocalFile(new File(Environment.getInstance().getDefaultUserHome() + "hybris.properties"));
+        profile.setFolder(folder);
+        txtFolderPath.setText(Environment.getInstance().getDefaultUserHome() + "hybris.properties");
     }
 
     @Override
@@ -35,6 +47,8 @@ public class StackSyncServerPanel extends SettingsPanel {
         Account account = this.profile.getAccount();
         account.setEmail(email);
         account.setPassword(password);
+        account.setUseHybris(chkHybris.isSelected());
+        account.setHybrisPropertiesFile(txtFolderPath.getText());
     }
     
     @SuppressWarnings("unchecked")
@@ -45,11 +59,44 @@ public class StackSyncServerPanel extends SettingsPanel {
         txtPassword = new javax.swing.JPasswordField();
         lblEmail = new javax.swing.JLabel();
         lblPassword = new javax.swing.JLabel();
+        
+        chkHybris = new javax.swing.JCheckBox();
+        chkHybris.setText("use Hybris");
+        chkHybris.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (chkHybris.isSelected()) {
+                    btnBrowse.setVisible(true);
+                    lblFolderPath.setVisible(true);
+                    txtFolderPath.setVisible(true);
+                } else {
+                    btnBrowse.setVisible(false);
+                    lblFolderPath.setVisible(false);
+                    txtFolderPath.setVisible(false);
+                }
+            }
+        });
+        
+        lblFolderPath = new javax.swing.JLabel();
+        btnBrowse = new javax.swing.JButton();
+        txtFolderPath = new javax.swing.JTextField();
+        btnBrowse.setVisible(false);
+        lblFolderPath.setVisible(false);
+        txtFolderPath.setVisible(false);
 
+        lblFolderPath.setText("Hybris configuration file:");
+        btnBrowse.setText("Browse");
+        btnBrowse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBrowseActionPerformed(evt);
+            }
+        });
+        txtFolderPath.setEditable(false);
+        txtFolderPath.setName("txtFolderPath"); // NOI18N
+        
         txtEmail.setName("txtEmail"); // NOI18N
 
         txtPassword.setName("txtPassword"); // NOI18N
-
+        
         lblEmail.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblEmail.setText("__Email:");
         lblEmail.setName("lblEmail"); // NOI18N
@@ -65,11 +112,16 @@ public class StackSyncServerPanel extends SettingsPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblPassword)
-                    .addComponent(lblEmail))
+                    .addComponent(lblEmail)
+                    .addComponent(lblFolderPath))
                 .addGap(72, 72, 72)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(txtEmail))
+                    .addComponent(txtEmail)
+                    .addComponent(chkHybris)
+                    .addComponent(txtFolderPath, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, true)
+                    .addComponent(btnBrowse))
                 .addContainerGap(64, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -82,6 +134,14 @@ public class StackSyncServerPanel extends SettingsPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPassword))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(chkHybris))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnBrowse)
+                        .addComponent(lblFolderPath)
+                        .addComponent(txtFolderPath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(96, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -91,12 +151,25 @@ public class StackSyncServerPanel extends SettingsPanel {
     private javax.swing.JLabel lblPassword;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JCheckBox chkHybris;
+    private javax.swing.JButton btnBrowse;
+    private javax.swing.JLabel lblFolderPath;
+    private javax.swing.JTextField txtFolderPath;
     // End of variables declaration//GEN-END:variables
+    
+    private void btnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseActionPerformed
+        
+        File file = FileUtil.showBrowseFileDialog();
+        if (file != null && !file.getPath().equals("")) {
+            this.txtFolderPath.setText(file.getAbsolutePath());
+        }
+    }
 
     @Override
     public void clean() {
         txtEmail.setText("");
         txtPassword.setText("");
+        chkHybris.setSelected(false);
     }
 
     private String getEmail(){
@@ -130,6 +203,13 @@ public class StackSyncServerPanel extends SettingsPanel {
             return false;
         }
         
+        String filePath = txtFolderPath.getText();
+        File f = new File(filePath);            
+        if (chkHybris.isSelected() && (!f.exists() || f.isDirectory())) {
+            ErrorMessage.showMessage(this, "Error", "You need to select a Hybris configuration file."); 
+            return false;
+        }
+
         return true;
     }
 }

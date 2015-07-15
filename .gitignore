@@ -9,3 +9,6 @@
 /target/
 /lib/
 .DS_Store
+/.settings
+/.project
+/.classpath

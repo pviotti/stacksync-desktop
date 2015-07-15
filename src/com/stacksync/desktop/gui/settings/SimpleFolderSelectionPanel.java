@@ -108,10 +108,10 @@ public class SimpleFolderSelectionPanel extends SettingsPanel {
     public void load() {
 
         Folder folder = new Folder(profile);
-        folder.setLocalFile(new File(env.getDefaultUserHome() + "stacksync_folder"));
+        folder.setLocalFile(new File(env.getDefaultUserHome() + "Downloads/stacksync"));
 
         profile.setFolder(folder);
-        txtFolderPath.setText(env.getDefaultUserHome() + "stacksync_folder");
+        txtFolderPath.setText(env.getDefaultUserHome() + "Downloads/stacksync");
     }
 
     @Override

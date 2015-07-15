@@ -6,6 +6,7 @@ import com.stacksync.desktop.config.profile.Account;
 import com.stacksync.desktop.config.profile.Profile;
 import com.stacksync.desktop.connection.plugins.Connection;
 import com.stacksync.desktop.connection.plugins.TransferManager;
+import com.stacksync.desktop.connection.plugins.hybris.HybrisConnection;
 import com.stacksync.desktop.connection.plugins.swift.SwiftConnection;
 import com.stacksync.desktop.exceptions.CacheException;
 import com.stacksync.desktop.exceptions.InitializationException;
@@ -96,16 +97,21 @@ public class StackSyncTestPanel extends SettingsPanel {
         
         private Connection createConnection(AccountInfo info) {
             
-            // Create swift connection
-            SwiftConnection connection = new SwiftConnection();
-            connection.setUser(info.getSwiftUser());
-            connection.setApiKey(profile.getAccount().getPassword());
-            connection.setTenant(info.getSwiftTenant());
-            connection.setAuthUrl(info.getSwiftAuthUrl());
-            connection.setUsername(info.getSwiftTenant()+":"+info.getSwiftUser());
-            connection.setContainer("");
-
-            return connection;
+            // Create Swift or Hybris connection
+            if (!profile.getAccount().isUseHybris()) {
+                SwiftConnection connection  = new SwiftConnection();
+                connection.setUser(info.getSwiftUser());
+                connection.setApiKey(profile.getAccount().getPassword());
+                connection.setTenant(info.getSwiftTenant());
+                connection.setAuthUrl(info.getSwiftAuthUrl());
+                connection.setUsername(info.getSwiftTenant()+":"+info.getSwiftUser());
+                connection.setContainer("");
+                return connection;
+            } else {
+                HybrisConnection connection = 
+                        new HybrisConnection(profile.getAccount().getHybrisPropertiesFile());
+                return connection;
+            }
         }
 
         private void createRepository(Connection connection) {
