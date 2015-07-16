@@ -6,7 +6,7 @@ import com.stacksync.desktop.connection.plugins.PluginInfo;
 import java.util.ResourceBundle;
 
 /**
- * Hybris StackSync plugin
+ * Hybris plugin info class.
  * @author EURECOM
  */
 public class HybrisPluginInfo extends PluginInfo {

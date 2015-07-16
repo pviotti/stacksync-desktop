@@ -9,7 +9,7 @@ import com.stacksync.desktop.connection.plugins.TransferManager;
 import com.stacksync.desktop.exceptions.ConfigException;
 
 /**
- *
+ * Hybris connection class.
  * @author EURECOM
  */
 public class HybrisConnection implements Connection {

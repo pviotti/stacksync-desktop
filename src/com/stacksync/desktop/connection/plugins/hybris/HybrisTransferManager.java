@@ -7,11 +7,13 @@ import com.stacksync.desktop.exceptions.RemoteFileNotFoundException;
 import com.stacksync.desktop.exceptions.StorageConnectException;
 import com.stacksync.desktop.exceptions.StorageException;
 import com.stacksync.desktop.exceptions.StorageQuotaExcedeedException;
+import com.stacksync.desktop.gui.tray.Tray;
 import com.stacksync.desktop.repository.files.RemoteFile;
 import com.stacksync.desktop.util.FileUtil;
 
 import fr.eurecom.hybris.Hybris;
 import fr.eurecom.hybris.HybrisException;
+import fr.eurecom.hybris.kvs.drivers.Kvs;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,12 +32,14 @@ public class HybrisTransferManager extends AbstractTransferManager {
 
     private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(HybrisTransferManager.class.getName());
     private Hybris hybris;
+    private final Tray tray = Tray.getInstance();
     
     public HybrisTransferManager(HybrisConnection connection) {
         super(connection);
         try {
             hybris = new Hybris(connection.getHybrisPropertiesFile());
             logger.info("Hybris initialized.");
+            tray.registerProcess(tray.getClass().getSimpleName());
         } catch (HybrisException ex) {
            logger.error(ex);
         }
@@ -83,7 +88,9 @@ public class HybrisTransferManager extends AbstractTransferManager {
     public void upload(File localFile, RemoteFile remoteFile, CloneWorkspace workspace) throws LocalFileNotFoundException, StorageException, StorageQuotaExcedeedException {
         logger.info("Hybris upload " + localFile.getName());
         try {
-            hybris.put(localFile.getName(), getBytesFromFile(localFile));
+            List<Kvs> clouds = hybris.put(localFile.getName(), getBytesFromFile(localFile));
+            String notifyBody = localFile.getName() + " successfully stored on " + clouds;
+            tray.notify("Upload", notifyBody, null);
         } catch (Exception ex) {
             logger.error(ex);
             throw new StorageException(ex);
