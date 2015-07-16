@@ -1,6 +1,9 @@
 Welcome to StackSync!
 =====================
 
+> **NOTE:** This is a fork of the main [StackSync desktop client repository](https://github.com/stacksync/desktop) 
+> that supports [Hybris](https://github.com/pviotti/hybris) as storage backend.
+
 > **NOTE:** This is BETA quality code!
 
 **Table of Contents**
