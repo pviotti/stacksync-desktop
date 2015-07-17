@@ -98,7 +98,7 @@ public class StackSyncTestPanel extends SettingsPanel {
         private Connection createConnection(AccountInfo info) {
             
             // Create Swift or Hybris connection
-            if (!profile.getAccount().isUseHybris()) {
+            if (!profile.isUseHybris()) {
                 SwiftConnection connection  = new SwiftConnection();
                 connection.setUser(info.getSwiftUser());
                 connection.setApiKey(profile.getAccount().getPassword());
@@ -109,7 +109,7 @@ public class StackSyncTestPanel extends SettingsPanel {
                 return connection;
             } else {
                 HybrisConnection connection = 
-                        new HybrisConnection(profile.getAccount().getHybrisPropertiesFile());
+                        new HybrisConnection(profile.getHybrisPropertiesFile());
                 return connection;
             }
         }

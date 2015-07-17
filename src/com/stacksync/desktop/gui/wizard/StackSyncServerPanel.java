@@ -44,11 +44,12 @@ public class StackSyncServerPanel extends SettingsPanel {
         this.email = getEmail();
         this.password = getPassword();
         
-        Account account = this.profile.getAccount();
+        Account account = profile.getAccount();
         account.setEmail(email);
         account.setPassword(password);
-        account.setUseHybris(chkHybris.isSelected());
-        account.setHybrisPropertiesFile(txtFolderPath.getText());
+        
+        profile.setUseHybris(chkHybris.isSelected());
+        profile.setHybrisPropertiesFile(txtFolderPath.getText());
     }
     
     @SuppressWarnings("unchecked")

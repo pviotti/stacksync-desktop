@@ -9,6 +9,7 @@ import com.stacksync.desktop.config.Configurable;
 import com.stacksync.desktop.config.Encryption;
 import com.stacksync.desktop.config.Folder;
 import com.stacksync.desktop.config.Repository;
+import com.stacksync.desktop.connection.plugins.hybris.HybrisConnection;
 import com.stacksync.desktop.db.DatabaseHelper;
 import com.stacksync.desktop.db.models.CloneWorkspace;
 import com.stacksync.desktop.exceptions.ConfigException;
@@ -26,6 +27,7 @@ import com.stacksync.desktop.util.WinRegistry;
 import com.stacksync.desktop.watch.local.LocalWatcher;
 import com.stacksync.desktop.watch.remote.ChangeManager;
 import com.stacksync.desktop.watch.remote.RemoteWatcher;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,9 +35,13 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
 import javax.persistence.NoResultException;
+
 import omq.common.broker.Broker;
+
 import org.apache.log4j.Logger;
+import org.hamcrest.core.IsInstanceOf;
 
 public class Profile implements Configurable {
 
@@ -56,6 +62,8 @@ public class Profile implements Configurable {
     private Account account;
     private HashMap<String, Encryption> workspaceEncryption;
     private String defaultWorkspacePassword;
+    private boolean useHybris;
+    private String hybrisPropertiesFile;
 
     public Profile() {
         active = false;
@@ -400,6 +408,22 @@ public class Profile implements Configurable {
     public void setDefaultWorkspacePassword(String defaultWorkspacePassword) {
         this.defaultWorkspacePassword = defaultWorkspacePassword;
     }
+    
+    public boolean isUseHybris() {
+        return useHybris;
+    }
+
+    public void setUseHybris(boolean uh) {
+        this.useHybris = uh;
+    }
+    
+    public String getHybrisPropertiesFile() {
+        return hybrisPropertiesFile;
+    }
+
+    public void setHybrisPropertiesFile(String hp) {
+        this.hybrisPropertiesFile = hp;
+    }
 
     @Override
     public void load(ConfigNode node) throws ConfigException {
@@ -417,6 +441,12 @@ public class Profile implements Configurable {
             // Repo
             repository = new Repository();
             repository.load(node.findChildByName("repository"));
+            
+            if (repository.getConnection() instanceof HybrisConnection) {
+            	setUseHybris(true);
+            } else {
+            	setUseHybris(false);
+            }
 
             // Folder
             folder = new Folder(this);

@@ -2,21 +2,24 @@ package com.stacksync.desktop.gui.settings;
 
 import javax.swing.UIManager;
 
+import com.stacksync.desktop.config.Config;
+import com.stacksync.desktop.config.profile.Profile;
 import com.stacksync.desktop.connection.plugins.hybris.HybrisConfigPanel;
 
 public class SettingsDialogNew extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 1L;
+	private Profile profile;
 	
 	public SettingsDialogNew() {
-        initComponents();
+		profile = Config.getInstance().getProfile();
+		initComponents();
     }
 
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
-        jPanel1 = new HybrisConfigPanel();
 
         setTitle("StackSync Configuration");
         setResizable(false);
@@ -33,8 +36,12 @@ public class SettingsDialogNew extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("StackSync", jPanel2);
-        jTabbedPane1.addTab("Hybris", jPanel1);
-        jTabbedPane1.setSelectedIndex(1);
+        
+        if (profile.isUseHybris()) {
+            jPanel1 = new HybrisConfigPanel();
+            jTabbedPane1.addTab("Hybris", jPanel1);
+            jTabbedPane1.setSelectedIndex(1);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
