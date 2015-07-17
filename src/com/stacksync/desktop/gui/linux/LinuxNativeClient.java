@@ -112,6 +112,7 @@ public class LinuxNativeClient {
             BufferedReader in = null;
             
             try {
+                logger.info("Sent request " + request + ". Before connecting...");
                 Socket socket = connect();
                 out = new PrintWriter(socket.getOutputStream());
                 isr = new InputStreamReader(socket.getInputStream());

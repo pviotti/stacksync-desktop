@@ -189,16 +189,16 @@ public class MacTray extends Tray {
         menu.addSeparator();
 
         // Preferences
-        //itemPreferences = new MenuItem("Preferencias ...");
-        //itemPreferences.addActionListener(new ActionListener() {
+        itemPreferences = new MenuItem("Preferences ...");
+        itemPreferences.addActionListener(new ActionListener() {
 
-        //    @Override
-        //    public void actionPerformed(ActionEvent ae) {
-        //        fireTrayEvent(new TrayEvent(TrayEvent.EventType.PREFERENCES));
-        //    }
-        //});
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                fireTrayEvent(new TrayEvent(TrayEvent.EventType.PREFERENCES));
+            }
+        });
 
-        //menu.add(itemPreferences);
+        menu.add(itemPreferences);
         
         itemShare = new MenuItem(resourceBundle.getString("tray_share_folder"));
         itemShare.addActionListener(new ActionListener() {

@@ -39,7 +39,7 @@ public class HybrisTransferManager extends AbstractTransferManager {
         try {
             hybris = new Hybris(connection.getHybrisPropertiesFile());
             logger.info("Hybris initialized.");
-            tray.registerProcess(tray.getClass().getSimpleName());
+            this.tray.registerProcess(this.getClass().getSimpleName());
         } catch (HybrisException ex) {
            logger.error(ex);
         }
@@ -88,9 +88,11 @@ public class HybrisTransferManager extends AbstractTransferManager {
     public void upload(File localFile, RemoteFile remoteFile, CloneWorkspace workspace) throws LocalFileNotFoundException, StorageException, StorageQuotaExcedeedException {
         logger.info("Hybris upload " + localFile.getName());
         try {
+            this.tray.registerProcess(this.getClass().getSimpleName());
             List<Kvs> clouds = hybris.put(localFile.getName(), getBytesFromFile(localFile));
             String notifyBody = localFile.getName() + " successfully stored on " + clouds;
             tray.notify("Upload", notifyBody, null);
+            logger.info("Notification sent: " + notifyBody);
         } catch (Exception ex) {
             logger.error(ex);
             throw new StorageException(ex);

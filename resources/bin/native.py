@@ -302,13 +302,13 @@ def do_update_menu(request):
 			menu.append(gtk.SeparatorMenuItem())	
 	
 	'''Preferences'''
-	#menu_item_prefs = gtk.MenuItem("Preferencias")
-	#menu_item_prefs.connect("activate", menu_item_clicked, "PREFERENCES")
+	menu_item_prefs = gtk.MenuItem("Preferences")
+	menu_item_prefs.connect("activate", menu_item_clicked, "PREFERENCES")
 	
-	#menu.append(menu_item_prefs)
+	menu.append(menu_item_prefs)
 	
 	'''---'''
-	#menu.append(gtk.SeparatorMenuItem())	
+	menu.append(gtk.SeparatorMenuItem())	
 	
 	'''Donate ...'''
 	#menu_item_donate = gtk.MenuItem("Donate1 ...")
@@ -336,6 +336,7 @@ def do_update_menu(request):
 
 	'''---'''
 	menu.append(gtk.SeparatorMenuItem())
+	
 
 	'''Website'''
 	menu_item_website = gtk.MenuItem("Go to StackSync website")

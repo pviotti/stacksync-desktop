@@ -3,12 +3,16 @@ package com.stacksync.desktop.gui.tray;
 import com.stacksync.desktop.ApplicationController;
 import com.stacksync.desktop.Constants;
 import com.stacksync.desktop.config.Config;
+import com.stacksync.desktop.gui.settings.SettingsDialogNew;
 import com.stacksync.desktop.gui.sharing.SharePanel;
 import com.stacksync.desktop.util.FileUtil;
+
 import java.io.File;
 import java.util.ResourceBundle;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -32,9 +36,9 @@ public class TrayEventListenerImpl implements TrayEventListener {
                 FileUtil.openFile(folder);
                 break;
 
-            /*case PREFERENCES:
-                settingsDialog.setVisible(true);
-                break;*/
+            case PREFERENCES:
+            	new SettingsDialogNew().setVisible(true);
+                break;
 
             case WEBSITE:
                 FileUtil.browsePage(Constants.APPLICATION_URL);

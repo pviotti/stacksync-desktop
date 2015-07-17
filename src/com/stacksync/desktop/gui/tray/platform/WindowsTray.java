@@ -27,7 +27,7 @@ public class WindowsTray extends Tray {
     private SystemTray tray;
     private PopupMenu menu;
     private TrayIcon icon;
-    private MenuItem itemStatus, itemFolder, itemWebsite, itemWebsite2, itemQuit, itemSync, itemShare;
+    private MenuItem itemStatus, itemFolder, itemPreferences, itemWebsite, itemWebsite2, itemQuit, itemSync, itemShare;
     private TrayIconStatus status;
     private boolean syncActivated;
     
@@ -121,14 +121,14 @@ public class WindowsTray extends Tray {
         menu.addSeparator();
                 
         // Preferences
-        //itemPreferences = new MenuItem("Preferencias");
-        //itemPreferences.addActionListener(new ActionListener() {
+        itemPreferences = new MenuItem("Preferencias");
+        itemPreferences.addActionListener(new ActionListener() {
 
-        //    @Override
-        //    public void actionPerformed(ActionEvent ae) {
-        //        fireTrayEvent(new TrayEvent(TrayEvent.EventType.PREFERENCES));
-        //    }
-        //});
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                fireTrayEvent(new TrayEvent(TrayEvent.EventType.PREFERENCES));
+            }
+        });
 
         //menu.add(itemPreferences);
 
