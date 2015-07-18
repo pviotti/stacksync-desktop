@@ -90,7 +90,7 @@ public class HybrisTransferManager extends AbstractTransferManager {
         try {
             this.tray.registerProcess(this.getClass().getSimpleName());
             List<Kvs> clouds = hybris.put(localFile.getName(), getBytesFromFile(localFile));
-            String notifyBody = localFile.getName() + " successfully stored on " + clouds;
+            String notifyBody = "Chunk " + localFile.getName().substring(0, 12) + " successfully stored on " + clouds;
             tray.notify("Upload", notifyBody, null);
             logger.info("Notification sent: " + notifyBody);
         } catch (Exception ex) {
