@@ -6,7 +6,7 @@ package com.stacksync.desktop.connection.plugins.hybris;
 
 import java.io.File;
 
-import com.stacksync.desktop.gui.settings.SettingsPanel;
+import com.stacksync.desktop.connection.plugins.ConfigPanel;
 import com.stacksync.desktop.util.FileUtil;
 
 import fr.eurecom.hybris.Config;
@@ -15,13 +15,13 @@ import fr.eurecom.hybris.Config;
  * Hybris configuration panel
  * @author EURECOM
  */
-public class HybrisConfigPanel extends SettingsPanel { // XXX extends ConfigPanel
+public class HybrisConfigPanel extends ConfigPanel {
 
 	private static final long serialVersionUID = 1L;
 	private Config hConf;
 	
     public HybrisConfigPanel() {
-        super();
+        super(null);
         initComponents();
         hConf = Config.getInstance();
         load();

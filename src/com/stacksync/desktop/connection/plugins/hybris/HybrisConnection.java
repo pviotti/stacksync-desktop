@@ -35,7 +35,7 @@ public class HybrisConnection implements Connection {
 
     @Override
     public ConfigPanel createConfigPanel() {
-        return null; // XXX
+        return new HybrisConfigPanel();
     }
 
     @Override
