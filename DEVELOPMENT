@@ -3,19 +3,17 @@ DEVELOPMENT
 
 1. SOURCE CODE
 --------------
-Source code is hosted in the AST Research Group SVN server.
-If you need more information contact the authors.
+Source code is hosted at this address: https://github.com/stacksync/desktop
 
 2. STACKSYNC
 ----------
 StackSync is almost entirely based on Java.
-The development IDE is NetBeans 7.
 
 
 2.1. BUILD REQUIREMENTS
 -----------------------
 * JDK 6, or higher
-* Apache Ant
+* Apache Maven
 
 
 2.2. BUILDING & RUNNING

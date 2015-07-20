@@ -43,12 +43,13 @@ middleware called ObjectMQ. The sync service interacts with the metadata
 database. The StackSync client directly interacts with the storage back-end
 to upload and download files.
 
-As storage back-end we are using OpenStack Swift, an open source cloud storage
-software where you can store and retrieve lots of data in virtual containers.
+As storage backend this version of StackSync supports both 
+[OpenStack Swift](http://docs.openstack.org/developer/swift/), 
+and [Hybris](https://github.com/pviotti/hybris).
 
 # Desktop client
 
-This repository contains desktop client code. StackSync client is a branch of 
+This repository contains desktop client code. StackSync client is a fork of 
 the Syncany project developed by Philipp Heckel (http://www.syncany.org/).
 
 StackSync is an application that monitors local folders and synchronizes them
